@@ -1,0 +1,27 @@
+{
+  "name": "sift",
+  "description": "Scores Upwork job postings for fit and scam risk while browsing.",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "wxt",
+    "dev:firefox": "wxt -b firefox",
+    "build": "wxt build",
+    "build:firefox": "wxt build -b firefox",
+    "zip": "wxt zip",
+    "compile": "wxt prepare && tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "postinstall": "wxt prepare"
+  },
+  "devDependencies": {
+    "happy-dom": "^20.10.3",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.8",
+    "wxt": "^0.20.26"
+  },
+  "dependencies": {
+    "unpdf": "^1.6.2"
+  }
+}
