@@ -1,4 +1,6 @@
-import type { ProviderKind } from '../types';
+/** Provider presets that prefill baseURL/model/key-hint. */
+
+import type { ProviderKind } from '@/core';
 
 export interface ProviderPreset {
   id: string;
@@ -32,10 +34,10 @@ export const PRESETS: ProviderPreset[] = [
   },
   {
     id: 'gemini',
-    label: 'Google Gemini (OpenAI-compatible)',
+    label: 'Google Gemini',
     kind: 'openai-compat',
     baseURL: 'https://generativelanguage.googleapis.com/v1beta/openai',
-    defaultModel: 'gemini-2.0-flash',
+    defaultModel: 'gemini-2.5-flash-lite',
     keyHint: 'aistudio.google.com -> Get API key (has a free tier)',
   },
   {

@@ -1,6 +1,8 @@
-import type { ExtractedJob, ProviderConfig } from '../types';
+/** Transport-layer types shared by the LLM adapters. */
 
-// What a single scoring request gives the model
+import type { ProviderConfig } from '@/core';
+
+// What a single completion request gives the model
 export interface CompletionRequest {
   system: string;
   user: string;
@@ -11,10 +13,4 @@ export interface CompletionRequest {
 // A provider adapter turns a prompt into raw model text
 export interface LLMAdapter {
   complete(req: CompletionRequest, cfg: ProviderConfig): Promise<string>;
-}
-
-export interface JobInput {
-  card: ExtractedJob;
-  // Full description, present on deep-dive only
-  fullDescription?: string;
 }
