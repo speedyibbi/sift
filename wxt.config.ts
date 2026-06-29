@@ -3,6 +3,13 @@ import { defineConfig } from 'wxt';
 // See https://wxt.dev/api/config.html
 export default defineConfig({
   srcDir: '.',
+  vite: () => ({
+    resolve: {
+      alias: {
+        '@': new URL('./src', import.meta.url).pathname,
+      },
+    },
+  }),
   manifest: {
     name: 'Sift',
     description:
