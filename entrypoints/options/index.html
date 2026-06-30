@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sift — Settings</title>
+    <style>
+      :root { color-scheme: light dark; }
+      body { font: 14px/1.5 system-ui, sans-serif; max-width: 640px; margin: 0 auto; padding: 24px; }
+      h1 { font-size: 20px; margin-bottom: 4px; }
+      .sub { color: #718096; margin-top: 0; }
+      fieldset { border: 1px solid #cbd5e0; border-radius: 8px; margin: 16px 0; padding: 12px 16px; }
+      legend { font-weight: 700; padding: 0 6px; }
+      label { display: block; margin: 10px 0 2px; font-weight: 600; }
+      input[type="text"], input[type="password"], input[type="number"], select, textarea {
+        width: 100%; padding: 7px 8px; border: 1px solid #cbd5e0; border-radius: 6px; box-sizing: border-box; font: inherit;
+      }
+      textarea { min-height: 64px; resize: vertical; }
+      .row { display: flex; gap: 12px; }
+      .row > div { flex: 1; }
+      .check { display: flex; align-items: center; gap: 8px; font-weight: 600; margin: 8px 0; }
+      .check input { width: auto; }
+      .hint { color: #718096; font-size: 12px; margin: 2px 0 0; }
+      .actions { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+      button { padding: 8px 16px; border-radius: 6px; border: 1px solid #cbd5e0; background: #2b6cb0; color: #fff; font-weight: 700; cursor: pointer; }
+      button.secondary { background: #edf2f7; color: #1a202c; }
+      .status { font-weight: 600; }
+      .ok { color: #2f855a; } .err { color: #c0392b; }
+    </style>
+  </head>
+  <body>
+    <h1>Sift</h1>
+    <p class="sub">Score Upwork jobs for fit &amp; scam risk while you browse.</p>
+
+    <fieldset>
+      <legend>LLM provider</legend>
+      <label for="preset">Provider</label>
+      <select id="preset"></select>
+      <p class="hint" id="keyHint"></p>
+
+      <div class="row">
+        <div>
+          <label for="model">Model</label>
+          <input type="text" id="model" placeholder="model id" />
+        </div>
+        <div>
+          <label for="baseURL">Base URL</label>
+          <input type="text" id="baseURL" placeholder="https://..." />
+        </div>
+      </div>
+
+      <label for="apiKey">API key (stored locally, never leaves this machine)</label>
+      <input type="password" id="apiKey" placeholder="sk-..." autocomplete="off" />
+
+      <div class="actions">
+        <button type="button" class="secondary" id="test">Test connection</button>
+        <span class="status" id="testResult"></span>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Caching</legend>
+      <label for="cacheTtlHours">Re-use a verdict for (hours) — 0 disables caching</label>
+      <input type="number" id="cacheTtlHours" min="0" step="0.5" />
+      <p class="hint">Editing your profile or rules clears all cached verdicts automatically. Use a card's “↻ Re-score” to refresh just one.</p>
+    </fieldset>
+
+    <fieldset>
+      <legend>Prefilter rules (free, run before any LLM call)</legend>
+      <div class="check"><input type="checkbox" id="requirePaymentVerified" /><label for="requirePaymentVerified" style="margin:0">Require verified payment method</label></div>
+      <div class="check"><input type="checkbox" id="allowFixed" /><label for="allowFixed" style="margin:0">Include fixed-price jobs</label></div>
+      <div class="check"><input type="checkbox" id="allowHourly" /><label for="allowHourly" style="margin:0">Include hourly jobs</label></div>
+
+      <div class="row">
+        <div><label for="minFixedBudget">Min fixed budget ($)</label><input type="number" id="minFixedBudget" min="0" /></div>
+        <div><label for="minHourlyRate">Min hourly rate ($/hr)</label><input type="number" id="minHourlyRate" min="0" /></div>
+      </div>
+      <div class="row">
+        <div><label for="minClientSpend">Min client spend ($)</label><input type="number" id="minClientSpend" min="0" /></div>
+        <div><label for="minClientRating">Min client rating (0–5)</label><input type="number" id="minClientRating" min="0" max="5" step="0.1" /></div>
+      </div>
+      <label for="maxProposals">Max proposals before flagging high competition (0 = off)</label>
+      <input type="number" id="maxProposals" min="0" />
+
+      <label for="requiredKeywords">Required keywords (one per line — listings missing all of these are flagged, not dropped)</label>
+      <textarea id="requiredKeywords"></textarea>
+      <label for="bannedKeywords">Banned keywords (one per line — any match is dropped for free)</label>
+      <textarea id="bannedKeywords"></textarea>
+    </fieldset>
+
+    <fieldset>
+      <legend>Your profile (drives the LLM's fit judgement)</legend>
+      <label for="skills">Skills (one per line)</label>
+      <textarea id="skills"></textarea>
+      <label for="resume">Resume / background</label>
+      <textarea id="resume" style="min-height:120px"></textarea>
+      <div class="actions" style="margin-top:6px">
+        <input type="file" id="resumeFile" accept=".pdf,.md,.markdown,.txt,application/pdf,text/markdown,text/plain" />
+        <span class="hint" id="resumeFileHint">Or upload a .pdf/.md/.txt resume to fill the box above (you can still edit it before saving). If Skills or Ideal job are left empty, the resume is used for those too.</span>
+      </div>
+      <label for="idealJob">Describe your ideal job</label>
+      <textarea id="idealJob"></textarea>
+    </fieldset>
+
+    <div class="actions">
+      <button type="button" id="save">Save settings</button>
+      <span class="status" id="saveResult"></span>
+    </div>
+
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>
