@@ -1,0 +1,51 @@
+<!--
+  Synthetic Upwork feed fixture, refreshed against live markup (June 2026):
+  tiles are <section> children of [data-test="job-tile-list"], the title link
+  has no data-test (its href carries the ~jobId), and field hooks use the
+  current data-test names (job-type, contractor-tier, posted-on,
+  payment-verification-status, client-spendings, attr-item, ...).
+  This is the EXTRACTION CONTRACT, not a guaranteed snapshot of live markup;
+  keep feed.test.ts assertions honest when you re-capture.
+-->
+<div data-test="job-tile-list">
+  <section class="air3-card-section air3-card-hover">
+    <a href="/jobs/Senior-React-Developer_~021111111111111111/?from=feed">
+      Senior React Developer for SaaS dashboard
+    </a>
+    <span data-test="job-type">Hourly: $40.00-$60.00</span>
+    <span data-test="contractor-tier">Intermediate</span>
+    <span data-test="job-description-text">
+      We need a React engineer to build analytics dashboards with TypeScript and GraphQL.
+    </span>
+    <div data-test="posted-on">Posted 2 hours ago</div>
+    <div data-test="proposals-tier">Proposals: 5 to 10</div>
+    <small data-test="payment-verification-status">Payment verified</small>
+    <strong data-test="client-spendings">$20K+ spent</strong>
+    <span class="air3-rating-value-text">4.95 of 5</span>
+    <span data-test="client-country">United States</span>
+    <span data-test="attr-item">React</span>
+    <span data-test="attr-item">TypeScript</span>
+    <span data-test="attr-item">GraphQL</span>
+  </section>
+
+  <section class="air3-card-section air3-card-hover">
+    <a href="/jobs/Logo-Design_~022222222222222222/">
+      Logo design for startup
+    </a>
+    <span data-test="job-type">Fixed-price - Est. Budget: $150</span>
+    <span data-test="contractor-tier">Entry level</span>
+    <span data-test="job-description-text">Need a simple modern logo for a new brand.</span>
+    <div data-test="proposals-tier">Proposals: Less than 5</div>
+    <small data-test="payment-verification-status">Payment unverified</small>
+    <span data-test="attr-item">Logo Design</span>
+  </section>
+
+  <section class="air3-card-section air3-card-hover">
+    <a href="/jobs/Quick-Task_~023333333333333333/">
+      Quick task easy money
+    </a>
+    <span data-test="job-type">Hourly: $3.00-$5.00</span>
+    <span data-test="job-description-text">Message me on Telegram to start, we pay outside Upwork.</span>
+    <span data-test="attr-item">Data Entry</span>
+  </section>
+</div>
