@@ -8,11 +8,12 @@ import type {
   ScoreResponse,
   TestResponse,
 } from '@/core';
+import { LLM_CONCURRENCY } from '@/config';
 import { scoreJob } from '@/scoring';
 import { testConnection } from '@/llm';
 import { getSettings, getCachedVerdict, setCachedVerdict } from '@/storage';
 
-const limit = createLimiter(4);
+const limit = createLimiter(LLM_CONCURRENCY);
 
 async function handleScore(
   msg: Extract<Message, { type: 'SCORE_JOB' | 'DEEP_DIVE' }>,
