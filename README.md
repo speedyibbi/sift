@@ -6,7 +6,7 @@ every listing.
 
 - **Local prefilter** (rules) drops obvious junk.
 - **LLM scoring** (provider-agnostic) judges fit/scam on the survivors.
-- **On-demand deep-dive** fetches a job's full description for a thorough verdict.
+- **On-demand deep-dive** renders a job's full listing for a thorough verdict.
 - Runs entirely in the user's own logged-in browser session — no servers, no scraping  
 bots, no login automation.
 
@@ -17,14 +17,16 @@ Upwork feed (user logged in)
   -> content script extracts each job card
   -> prefilter: hard-fail = filtered badge, no LLM
   -> survivors -> background worker -> LLM -> fit/scam verdict
-  -> badge injected on the card; click "Deep-dive" for the full description
+  -> badge injected on the card; click the deep-dive option to render the full listing
+     in a hidden iframe for a deeper verdict
 ```
 
-The background service worker owns the LLM call (centralizes API key,  
-handles CORS via host permissions, caps concurrency, caches verdicts). The  
-deep-dive fetch+parse runs in the content script because MV3 workers have no  
-`DOMParser` and the content script can fetch the job page same-origin with the user's  
-session cookies.
+The background service worker owns the LLM call (centralizes the API key,  
+handles CORS via host permissions, caps concurrency, caches verdicts). The deep-dive  
+render+parse runs in the content script, because MV3 workers have no `DOMParser`.  
+A plain `fetch` of the job page is blocked by Upwork's bot protection, so the  
+content script instead loads it in a hidden same-origin iframe — a real navigation,  
+which passes — and parses the live DOM once the description renders.
 
 ## Setup
 
@@ -58,15 +60,19 @@ Load `.output/chrome-mv3/` via `chrome://extensions` → *Load unpacked* (or use
 
 ## Tuning the extractor (the fragile part)
 
-All brittle DOM knowledge lives in `src/extract/feed.ts` (`SELECTORS`). Upwork
+All brittle DOM knowledge lives in `src/platforms/upwork/` — `feed.ts`
+(`SELECTORS`) for the feed cards, `detail.ts` for the deep-dive job page. Upwork
 changes its markup periodically; if badges stop appearing, open the feed in
 DevTools, find the current job-card wrapper attribute, update `SELECTORS.tile`
 (and the per-field selectors), and refresh `test/fixtures/feed.html` to match.
 The fixtures encode the extraction *contract*, not a guarantee about live markup.
 
+Adding a second platform means adding a new `src/platforms/<site>/` implementing
+the same `Platform` contract.
+
 ## Note on Upwork's Terms
 
 This tool only reads and annotates pages the user is already logged in and  
-authorized to view, and only fetches a full job page when the deep-dive option is clicked.  
+authorized to view, and only loads a full job page when the deep-dive option is clicked.  
 It does not automate login, scrape in the background, or run on its own. The extension is  
 configured so that the user doesn't get flagged but it is not a guarantee; use it responsibly.
