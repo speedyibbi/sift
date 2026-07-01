@@ -1,4 +1,4 @@
-/** Provider presets that prefill baseURL/model/key-hint. */
+/** Provider presets that prefill baseURL and default model. */
 
 import type { ProviderKind } from '@/core';
 
@@ -8,8 +8,6 @@ export interface ProviderPreset {
   kind: ProviderKind;
   baseURL: string;
   defaultModel: string;
-  /** Where the user gets an API key, shown in the options page. */
-  keyHint: string;
 }
 
 // All openai-compat providers speak the same /chat/completions schema, so a
@@ -17,60 +15,46 @@ export interface ProviderPreset {
 // Model strings are sensible cheap defaults; edit freely in the options page.
 export const PRESETS: ProviderPreset[] = [
   {
+    id: 'openai',
+    label: 'OpenAI (ChatGPT)',
+    kind: 'openai-compat',
+    baseURL: 'https://api.openai.com/v1',
+    defaultModel: 'gpt-4o-mini',
+  },
+  {
     id: 'anthropic',
     label: 'Anthropic (Claude)',
     kind: 'anthropic',
     baseURL: 'https://api.anthropic.com',
     defaultModel: 'claude-haiku-4-5-20251001',
-    keyHint: 'console.anthropic.com -> API Keys',
   },
   {
-    id: 'openai',
-    label: 'OpenAI',
-    kind: 'openai-compat',
-    baseURL: 'https://api.openai.com/v1',
-    defaultModel: 'gpt-4o-mini',
-    keyHint: 'platform.openai.com -> API keys',
-  },
-  {
-    id: 'gemini',
-    label: 'Google Gemini',
+    id: 'google',
+    label: 'Google (Gemini)',
     kind: 'openai-compat',
     baseURL: 'https://generativelanguage.googleapis.com/v1beta/openai',
     defaultModel: 'gemini-2.5-flash-lite',
-    keyHint: 'aistudio.google.com -> Get API key (has a free tier)',
   },
   {
-    id: 'openrouter',
-    label: 'OpenRouter',
+    id: 'grok',
+    label: 'xAI (Grok)',
     kind: 'openai-compat',
-    baseURL: 'https://openrouter.ai/api/v1',
-    defaultModel: 'openai/gpt-4o-mini',
-    keyHint: 'openrouter.ai -> Keys',
+    baseURL: 'https://api.x.ai/v1',
+    defaultModel: 'grok-3-mini',
   },
   {
-    id: 'groq',
-    label: 'Groq',
+    id: 'meta',
+    label: 'Meta (Llama)',
     kind: 'openai-compat',
-    baseURL: 'https://api.groq.com/openai/v1',
-    defaultModel: 'llama-3.1-8b-instant',
-    keyHint: 'console.groq.com -> API Keys',
+    baseURL: 'https://api.llama.com/compat/v1',
+    defaultModel: 'llama-4-scout-17b-16e-instruct-fp8',
   },
   {
-    id: 'ollama',
-    label: 'Ollama (local)',
+    id: 'local',
+    label: 'Local (Ollama / LM Studio)',
     kind: 'openai-compat',
     baseURL: 'http://localhost:11434/v1',
     defaultModel: 'llama3.1',
-    keyHint: 'No key needed for local Ollama (enter "ollama")',
-  },
-  {
-    id: 'custom',
-    label: 'Custom (OpenAI-compatible)',
-    kind: 'openai-compat',
-    baseURL: '',
-    defaultModel: '',
-    keyHint: 'Your own OpenAI-compatible endpoint',
   },
 ];
 

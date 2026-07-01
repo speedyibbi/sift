@@ -37,9 +37,9 @@ npm run dev        # launches Chromium with the extension + HMR
 
 Then open the extension's **Options** page and set:
 
-1. **LLM provider** — pick a preset (Anthropic, OpenAI, Gemini, OpenRouter,
-  Groq, local Ollama, or a custom OpenAI-compatible endpoint), a model, and  
-  the API key. The key is stored in `storage.local` and never leaves the user's  
+1. **LLM provider** — pick a preset (OpenAI, Anthropic, Google, xAI,
+  Meta, or **Local** for Ollama/LM Studio on this machine), a model, and
+  the API key. The key is stored in `storage.local` and never leaves the user's
   machine. Hit **Test connection**.
 2. **Prefilter rules** — budgets, client thresholds, required/banned keywords.
 3. **Profile** — skills, resume, and ideal-job description (this is what

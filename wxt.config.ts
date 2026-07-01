@@ -16,15 +16,15 @@ export default defineConfig({
       'Scores Upwork job postings for fit and scam risk inline, while browsing.',
     permissions: ['storage'],
     // host_permissions let the background service worker call LLM APIs cross-origin
-    // (bypassing CORS) and let the content script run on Upwork. Add a custom
-    // endpoint here if the extension is pointed at a custom/self-hosted LLM.
+    // (bypassing CORS) and let the content script run on Upwork. Local models
+    // must use localhost or 127.0.0.1 — other origins require a rebuild.
     host_permissions: [
       '*://*.upwork.com/*',
       'https://api.openai.com/*',
       'https://api.anthropic.com/*',
       'https://generativelanguage.googleapis.com/*',
-      'https://openrouter.ai/*',
-      'https://api.groq.com/*',
+      'https://api.x.ai/*',
+      'https://api.llama.com/*',
       'http://localhost/*',
       'http://127.0.0.1/*',
     ],

@@ -31,13 +31,13 @@ export const DEFAULT_PROFILE: Profile = {
   skills: [],
 };
 
-// Default to the Google Gemini preset.
-const geminiPreset = presetById('gemini')!;
+// Default to the Google preset.
+const googlePreset = presetById('google')!;
 
 export const DEFAULT_PROVIDER: ProviderConfig = {
-  kind: geminiPreset.kind,
-  baseURL: geminiPreset.baseURL,
-  model: geminiPreset.defaultModel,
+  kind: googlePreset.kind,
+  baseURL: googlePreset.baseURL,
+  model: googlePreset.defaultModel,
   apiKey: '',
 };
 

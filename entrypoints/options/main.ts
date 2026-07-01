@@ -13,7 +13,6 @@ function byId<T extends HTMLElement>(id: string): T {
 
 const fields = {
   preset: byId<HTMLSelectElement>('preset'),
-  keyHint: byId<HTMLParagraphElement>('keyHint'),
   model: byId<HTMLInputElement>('model'),
   baseURL: byId<HTMLInputElement>('baseURL'),
   apiKey: byId<HTMLInputElement>('apiKey'),
@@ -55,29 +54,25 @@ function populatePresets(): void {
   }
 }
 
-// Pick the preset that matches saved provider config, else "custom".
+// Pick the preset that matches saved provider config, else "local".
 function matchPreset(s: Settings): string {
   const found = PRESETS.find(
     (p) => p.kind === s.provider.kind && p.baseURL === s.provider.baseURL,
   );
-  return found?.id ?? 'custom';
+  return found?.id ?? 'local';
 }
 
 function applyPreset(id: string): void {
   const p = presetById(id);
   if (!p) return;
-  fields.keyHint.textContent = `API key: ${p.keyHint}`;
-  if (p.id !== 'custom') {
-    fields.baseURL.value = p.baseURL;
-    fields.model.value = p.defaultModel;
-  }
+  fields.baseURL.value = p.baseURL;
+  fields.model.value = p.defaultModel;
 }
 
 let lastSaved: Settings | null = null;
 
 function load(s: Settings): void {
   fields.preset.value = matchPreset(s);
-  fields.keyHint.textContent = `API key: ${presetById(fields.preset.value)?.keyHint ?? ''}`;
   fields.model.value = s.provider.model;
   fields.baseURL.value = s.provider.baseURL;
   fields.apiKey.value = s.provider.apiKey;
